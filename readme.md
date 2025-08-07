@@ -1,8 +1,4 @@
-Here’s a clean and professional `README.md` for your Discord Welcome Bot project. It's ready for GitHub and suitable for client handoff or open-source use.
 
----
-
-````md
 # 🤖 Discord Welcome Bot
 
 A simple Discord bot built with `discord.js` that sends welcome messages to a specified channel whenever a new member joins the server.
