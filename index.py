@@ -1,13 +1,18 @@
 import discord
 from discord.ext import commands
 import logging
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Enable logging
 logging.basicConfig(level=logging.INFO)
 
-# !! REPLACE THESE !!
-USER_TOKEN = "MTM1OTlyNzY5MjU30DUwODg4MQ.G4Y8lf.7dwTADUUOSQ6py0hotgAaptVw2Lpl27iR8fdLc"  # From DevTools
-YOUR_USER_ID = 1359227692578508881      # Your Discord ID (right-click profile → Copy ID)
+# Get configuration from environment variables
+USER_TOKEN = os.getenv("DISCORD_TOKEN")
+YOUR_USER_ID = int(os.getenv("DISCORD_USER_ID"))
 
 intents = discord.Intents.default()
 intents.members = True  # Required for join events
