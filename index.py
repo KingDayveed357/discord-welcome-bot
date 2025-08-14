@@ -27,7 +27,7 @@
 # async def on_member_join(member):
 #     try:
 #         you = await bot.fetch_user(YOUR_USER_ID)
-#         await you.send(f"🚨 New member joined: {member.name} ({member.id})")
+#         await you.send(f" New member joined: {member.name} ({member.id})")
 #     except Exception as e:
 #         logging.error(f"Error sending DM: {e}")
 
@@ -39,13 +39,13 @@ from discord.ext import commands
 import os
 USER_TOKEN = os.getenv("DISCORD_TOKEN")
 
-bot = commands.Bot(command_prefix="!", intents=discord.Intents.default(), self_bot=True)
+bot = commands.Bot(command_prefix="!", intents=discord.Intents.all(), self_bot=True)
 @bot.event
 async def on_ready():
-    print(f"Logged in as {bot.user} (ID: {bot.user.id})")   
+    print(f"Logged in as {bot.user.name} (ID: {bot.user.id})")   
 
 @bot.command()
 async def ping(ctx):
     await ctx.send("Pong!")
 
-bot.run(USER_TOKEN, bot=False)  # Use bot=False for self-bot functionality
+bot.run(USER_TOKEN)  
