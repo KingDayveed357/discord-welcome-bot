@@ -37,15 +37,22 @@
 import discord
 from discord.ext import commands
 import os
+
 USER_TOKEN = os.getenv("DISCORD_TOKEN")
 
-bot = commands.Bot(command_prefix="!", intents=discord.Intents.all(), self_bot=True)
+# For discord.py-self, use this instead of Intents.all():
+bot = commands.Bot(
+    command_prefix="!",
+    self_bot=True,  # This is what enables self-bot mode
+    # Intents are not supported in discord.py-self (remove this line)
+)
+
 @bot.event
 async def on_ready():
-    print(f"Logged in as {bot.user.name} (ID: {bot.user.id})")   
+    print(f"Logged in as {bot.user} (ID: {bot.user.id})")
 
 @bot.command()
 async def ping(ctx):
     await ctx.send("Pong!")
 
-bot.run(USER_TOKEN)  
+bot.run(USER_TOKEN)
