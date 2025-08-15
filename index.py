@@ -40,19 +40,38 @@ import os
 
 USER_TOKEN = os.getenv("DISCORD_TOKEN")
 
-# For discord.py-self, use this instead of Intents.all():
+if not USER_TOKEN:
+    raise RuntimeError("No token found in DISCORD_TOKEN")
+
+# Explicit user agent for self-bots
+headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"
+}
+
 bot = commands.Bot(
     command_prefix="!",
-    self_bot=True,  # This is what enables self-bot mode
-    # Intents are not supported in discord.py-self (remove this line)
+    self_bot=True,
+    connector_kwargs={"headers": headers}
 )
 
 @bot.event
+async def on_connect():
+    print("Connected to Discord...")
+
+@bot.event
 async def on_ready():
-    print(f"Logged in as {bot.user} (ID: {bot.user.id})")
+    print(f"Successfully logged in as {bot.user}")
 
 @bot.command()
 async def ping(ctx):
     await ctx.send("Pong!")
 
-bot.run(USER_TOKEN)
+try:
+    bot.run(USER_TOKEN, reconnect=True)
+except discord.LoginFailure:
+    print("""
+    Failed to login. Possible reasons:
+    1. Token is invalid/revoked
+    2. Account has 2FA but token doesn't start with 'mfa.'
+    3. Discord is blocking self-bots from your IP
+    """)
