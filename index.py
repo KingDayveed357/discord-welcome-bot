@@ -37,6 +37,10 @@
 import discord
 from discord.ext import commands
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 USER_TOKEN = os.getenv("DISCORD_TOKEN")
 
